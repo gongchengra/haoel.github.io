@@ -3,14 +3,11 @@
 # 科学上网
 
 作者：左耳朵 [http://coolshell.cn](http://coolshell.cn)
-更新时间：2019-11-01
+更新时间：2019-11-02
 
 这篇文章可以写的更好，欢迎到 [https://github.com/haoel/haoel.github.io](https://github.com/haoel/haoel.github.io) 更新
 
 ![](./images/cover.jpg)
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [科学上网](#科学上网)
   - [0. 序](#0-序)
@@ -31,9 +28,11 @@
   - [5. 流量伪装和其它方式](#5-流量伪装和其它方式)
     - [5.1 V2Ray](#51-v2ray)
     - [5.2 Brook](#52-brook)
-  - [6. 其它](#6-其它)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+  - [6. 针对 IP 被封的解决方案](#6-针对-ip-被封的解决方案)
+    - [6.1 Cloudflare](#61-cloudflare)
+    - [6.2 V2Ray](#62-v2ray)
+    - [6.3 补充](#63-补充)
+  - [7. 其它](#7-其它)
 
 ## 0. 序
 
@@ -51,7 +50,7 @@
 - Twitter 上 Follow 一些牛人和一些官方账号，比如：AWS、Docker……
 - 社交 Facebook, Telegram, Whatsapp，Slack…… 有一些我在国外的亲戚和朋友……
 - Reddit 是一个聚合网站，一个新闻和文章的集散地，你可以认为是各种频道的今日头条……
-- Pintrest 和 Instagram  上面有很多不错的图片和视频新闻，是我减压力的地方……
+- Pinterest 和 Instagram  上面有很多不错的图片和视频新闻，是我减压力的地方……
 - 新闻，如BBC。 BBC是全球比较出众的媒体，有太多的有价值资源和内容了，比如纪录片、学英文……
 - 编程，有很多编程的场景需要翻墙，比如，Go语言编程时的 go get 中的很多库是放在 Google的服务器上， 然而Google是全部被墙，包括 Android 和其它一些文档和资源也是一样。包括 SourceForge 的某些项目也需要科学上网，Docker Registry也有部分被墙，还有偶尔抽疯的Github，以及不能访问的gist……
 - ……等等
@@ -63,16 +62,16 @@
 
 **首先，你应该对英文读写没什么问题!**
 
-为什么这么说？**逻辑是这样的，如果你上了Google还是在用中文关键词，那么你科学上网有什么意义呢？** 换言之，科学上网的目的是为了进入广阔的世界范围与全世界的人交流，所以，英文是必备的，如果你英文有问题，VPN过去的用处也不大。
+为什么这么说？**这主要是针对计算机相关的知识，逻辑是这样的，如果你上了Google还是在用中文关键词，那么你好不容易出来了，结果又回去了，所以没什么意义。** 换言之，科学上网的目的是为了进入广阔的世界范围与全世界的人交流，所以，英文是必备的，如果你英文有问题，VPN过去的用处也不大。
 
-所以，我把这个前提条件放在第一的位置，就是说—— **真正的墙不是GFW，而是人的大脑！**
+所以，我把这个前提条件放在第一的位置，就是说—— **真正的墙不是GFW，而是人的大脑！** 意思是，屏蔽你获得信息能力的不是墙，而很大一部分则是我们自己的语言能力！
 
 
 ## 2. 购买VPS
 
 然后，你需要一个VPS。 
 
-（注：*当然，你也可以直接购买一些科学上网的服务，但我这里不推荐了，一方面是广告，另一方面通常这样的服务非常的不稳定，而且也容易被代理方做中间件攻击*）
+（注：*当然，你也可以直接购买一些科学上网的服务，但我这里不推荐了，一方面是广告，另一方面通常这样的服务非常的不稳定，而且也容易被代理方做中间人攻击*）
 
 **现在你买一台VPS也不贵了，也就是一个月10美金左右（70元），我个人觉得一个月花70元钱不算奢侈的事，而且会让你的生活质量得得改善**。
 
@@ -82,8 +81,8 @@
 
 对于VPS，下面是一些常规选项。
 
-- [AWS LightSail](https://lightsail.aws.amazon.com/) 是一个非常便宜好用的服务，最低配置一个月 $3.5 美金，目前的Zone不多，推荐使用日本或新加坡（需要国际信用卡，现在不需要国际信用卡，2019-10-23号[亲测带教程](https://tech.laogongshuo.com/posts/free-aws-ladder/)）
-- [AWS EC2](https://aws.amazon.com/cn/)香港、日本或韩国申请个免费试用一年的EC2 VPS （需要国际信用卡，现在不需要国际信用卡，2019-10-23号亲测）
+- [AWS LightSail](https://lightsail.aws.amazon.com/) 是一个非常便宜好用的服务，最低配置一个月 $3.5 美金，目前的Zone不多，推荐使用日本或新加坡（支持银联卡）
+- [AWS EC2](https://aws.amazon.com/cn/)香港、日本或韩国申请个免费试用一年的EC2 VPS （支持银联卡）
 - [Google Cloud Platform](https://cloud.google.com/)提供免费试用，赠送300刀赠金（需要国际信用卡）
 - [Linode](https://www.linode.com)买个一月USD10刀的VPS
 - [Conoha](https://www.conoha.jp/zh/)上买一个日本的VPS，一个月900日元 （可以支付宝）
@@ -92,9 +91,9 @@
 
 
 > **注意**
-> - 在中国，因为有太多的网络提供商，所以，国内的网络也是很奇葩的，可以看到的是，不同的地方，不同的网络，到不同的国家完全不一样，而且还经常性地调整路由，所以，经常性地有时候快有时候慢，简真就是随机的。所以，像我这样要求比较高的人，一般会备3-5个不同国家地区的VPS，以保障上网的速度。
+> - 在中国，因为有太多的网络提供商，所以，国内的网络也是很奇葩的，可以看到的是，不同的地方，不同的网络，到不同的国家完全不一样，而且还经常性地调整路由，所以，经常性地有时候快有时候慢，简直就是随机的。所以，像我这样要求比较高的人，一般会备3-5个不同国家地区的VPS，以保障上网的速度。
 > 
-> - 香港网速应该是比较好的，但是香港的成本也是比较高的。
+> - 香港网速应该是比较好的，但是香港的成本也是比较高的。台湾的网速也是不错的，日本的网速其次，新加坡再次之，然后是美国的东海岸（这里是基于北京和上海的情况）
 >
 > - 日本区的网络质量并不一定很好，有时候快的飞快，但有时候会有很大的丢包率（不同的网络不一样），有时候会很慢。上述的这几个VPS服务商中，AWS韩国和日本会好点，然后是Linode，最后是Conoha和Vultr（如果你有更好的，请推荐）
 >
@@ -277,11 +276,40 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/dou
 
 然后你可以在 Brook 项目的 Github 首页上下载不同平台的客户端。设置起来也很简单！
 
-## 6. 其它 
+## 6. 针对 IP 被封的解决方案
+
+花钱购买的 VPS 即便做了流量伪装依然有很大的几率 IP 被封锁，大多 VPS 服务商并不提供更换 IP 的服务，使用 CDN 可以让被封锁的 VPS 继续发挥翻墙功能。
+
+### 6.1 Cloudflare
+
+Cloudflare 是一个 CDN 服务商，目前国内依然能正常的访问，可以作为跳板来实现翻墙。
+
+注册 Cloudflare 帐号，并有一个空闲域名（三级域名即可），交给 Cloudflare 托管并将域名指向被封的 VPS IP，注意开启 Proxied 并且 SSL-TLS 使用 Flexible 选项。
+
+Cloudflare 只需免费方案足以，不必花钱。
+
+### 6.2 V2Ray
+
+VPS 上正常安装并配置好 V2Ray，注意两点:
+
+1. 传输协议必须要使用 ws
+2. 要使用 80 或者 8080 端口
+
+如果端口有其他用途，那么用 Nginx/Caddy 之类软件，做一个 WebSocket proxy 到 V2Ray 即可。
+
+### 6.3 补充
+
+客户端注意使用网址来连接。
+
+目前支持 WebSocket 的免费 CDN 似乎只有 Cloudflare 一家，国内 CDN 服务商既不支持也不安全，不要考虑了。如果有更好的服务商欢迎补充。
+
+网络延迟比直连增加不少，如果是频繁操作会很痛苦。网络带宽如果运气好可能比直连还优化了，用来看 Youtube 搞不好更流畅。
+
+## 7. 其它 
+
+如下还有一些其它的方式（注：均由网友提供，我没有验证过）
 
 [Outline](https://getoutline.org/en/home) 是由 Google 旗下 [Jigsaw](https://jigsaw.google.com/) 团队开发的整套翻墙解决方案。Server 端使用 Shadowsocks，MacOS, Windows, iOS, Android 均有官方客户端。使用 Outline Manager 可以一键配置 DigitalOcean。其他平台例如 AWS, Google Cloud 也提供相应脚本。主要优点就是使用简单并且整个软件栈全部[开源](https://github.com/Jigsaw-Code/?q=outline)，有专业团队长期维护。
-
-
 
 （全文完）
 
